@@ -8,5 +8,15 @@ namespace Hat.Api.Controllers
         {
             return Ok();
         }
+
+        public IActionResult UpdateState()
+        {
+            return NoContent();
+        }
+
+        public IActionResult ChangeState()
+        {
+            return Accepted();
+        }
     }
 }
