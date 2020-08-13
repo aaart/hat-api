@@ -5,7 +5,7 @@ namespace Hat.Api.Controllers
 {
     public class HatController : Controller
     {
-        // GET
+        [HttpGet]
         public IActionResult ApiStatus()
         {
             return Ok($"Hi! API is active. timestamp: {DateTime.Now}");
