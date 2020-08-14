@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>Hat.Persistence</AssemblyName>
+        <RootNamespace>Hat.Persistence</RootNamespace>
+        <PackageId>Hat.Persistence</PackageId>
+        <Company>Hat.Persistence</Company>
+        <Product>Hat.Persistence</Product>
+    </PropertyGroup>
+
+</Project>
