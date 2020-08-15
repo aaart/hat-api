@@ -10,16 +10,34 @@ namespace Hat.Api.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        public IActionResult UpdateState()
+        [HttpGet]
+        public IActionResult Status()
+        {
+            return Ok();
+        }
+        
+        [HttpPost]
+        public IActionResult Enable()
         {
             return NoContent();
         }
 
-        [HttpPatch]
-        public IActionResult ChangeState()
+        [HttpPost]
+        public IActionResult Disable()
         {
-            return Accepted();
+            return NoContent();
+        }
+
+        [HttpPost]
+        public IActionResult MarkEnabled()
+        {
+            return NoContent();
+        }
+
+        [HttpPost]
+        public IActionResult MarkDisabled()
+        {
+            return NoContent();
         }
     }
 }
