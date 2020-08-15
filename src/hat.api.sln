@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hat.Domain", "Hat.Domain\Ha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hat.Persistence", "Hat.Persistence\Hat.Persistence.csproj", "{4512AF57-73A0-4DF5-AA93-44B448741F65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hat.Infrastructure", "Hat.Infrastructure\Hat.Infrastructure.csproj", "{8724C8B6-6D88-4758-8768-236682A451CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{4512AF57-73A0-4DF5-AA93-44B448741F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4512AF57-73A0-4DF5-AA93-44B448741F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4512AF57-73A0-4DF5-AA93-44B448741F65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8724C8B6-6D88-4758-8768-236682A451CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8724C8B6-6D88-4758-8768-236682A451CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8724C8B6-6D88-4758-8768-236682A451CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8724C8B6-6D88-4758-8768-236682A451CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
