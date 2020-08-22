@@ -14,7 +14,8 @@ namespace Hat.Infrastructure.Mvc
 
         protected IActionResult CreateResponse<T>(IServiceResult<T> result)
         {
-            return Ok();
+            var mapper = new ServiceStatusToApiResponseMapper(HttpContext.Request.Method);
+            return mapper.Map(result);
         }
     }
 }
