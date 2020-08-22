@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Hat.Infrastructure\Hat.Infrastructure.csproj" />
+      <ProjectReference Include="..\Hat.Services\Hat.Services.csproj" />
     </ItemGroup>
 
 </Project>
