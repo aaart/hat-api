@@ -17,7 +17,7 @@ namespace Hat.Infrastructure.Mvc
         public ObjectResult Map<TId>(IResourceCreatedServiceResult<TId> serviceResult)
         {
             var response = new ApiResponse<TId>(serviceResult.Status.Messages, serviceResult.Id);
-            if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Get.Method)
+            if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Post.Method)
             {
                 return new CreatedResult("location", serviceResult.Id);
             }
