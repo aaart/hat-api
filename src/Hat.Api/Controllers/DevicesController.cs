@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hat.Api.Controllers
 {
     [Route("[controller]")]
-    public class DevicesController : HatApiController
+    public class DevicesController : ApiController
     {
         private readonly IGetDevicesService _getDevicesService;
 
