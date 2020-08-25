@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hat.Domain.Devices.Services;
+using Hat.Services.Devices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,7 @@ namespace Hat.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddScoped<IGetDevicesService, GetDevicesService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

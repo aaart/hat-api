@@ -18,7 +18,7 @@ namespace Hat.Api.Controllers
         }
         
         [HttpGet]
-        [Route("/")]
+        [Route("")]
         [Produces(typeof(IEnumerable<DeviceDescription>))]
         public IActionResult All()
         {
@@ -26,35 +26,35 @@ namespace Hat.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/{deviceId}/status")]
+        [Route("{deviceId}/status")]
         public IActionResult Status(int deviceId)
         {
             return Ok();
         }
         
         [HttpPost]
-        [Route("/{deviceId}/enable")]
+        [Route("{deviceId}/enable")]
         public IActionResult Enable(int deviceId)
         {
             return NoContent();
         }
 
         [HttpPost]
-        [Route("/{deviceId}/disable")]
+        [Route("{deviceId}/disable")]
         public IActionResult Disable(int deviceId)
         {
             return NoContent();
         }
 
         [HttpPost]
-        [Route("/{deviceId}/markenabled")]
+        [Route("{deviceId}/markenabled")]
         public IActionResult MarkEnabled(int deviceId)
         {
             return NoContent();
         }
 
         [HttpPost]
-        [Route("/{deviceId}/markdisabled")]
+        [Route("{deviceId}/markdisabled")]
         public IActionResult MarkDisabled(int deviceId)
         {
             return NoContent();
