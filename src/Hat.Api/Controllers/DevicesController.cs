@@ -26,8 +26,8 @@ namespace Hat.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{deviceId}/status")]
-        public IActionResult Status(int deviceId)
+        [Route("{deviceId}")]
+        public IActionResult Device(int deviceId)
         {
             return Ok();
         }
