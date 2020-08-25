@@ -20,7 +20,7 @@ namespace Hat.Infrastructure.Mvc
         
         protected IActionResult CreateResponse<TId>(IResourceCreatedServiceResult<TId> result)
         {
-            var mapper = new ResourceCreatedServiceStatusToApiResponseMapper(HttpContext.Request.Method);
+            var mapper = new ResourceCreatedServiceStatusToApiResponseMapper(HttpContext.Request.Method, HttpContext.Request.Path.Value);
             return mapper.Map(result);
         }
     }
