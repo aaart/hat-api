@@ -1,5 +1,6 @@
 using Hat.Infrastructure.Mvc;
 using Hat.Infrastructure.Service;
+using Microsoft.AspNetCore.Http;
 using Xunit;
 
 namespace Hat.Tests.Infrastructure.Mvc
@@ -7,7 +8,7 @@ namespace Hat.Tests.Infrastructure.Mvc
     public class ResourceCreatedServiceStatusToApiResponseMapperTest
     {
         [Theory]
-        [InlineData(Status.PredefinedKey.OkKey, "POST", 201)]
+        [InlineData(Status.PredefinedKey.OkKey, "POST", StatusCodes.Status201Created)]
         public void AllPredefinedReasons_WhenResourceIdInServiceResult_ExpectValidHttpResponse(string key, string requestMethod, int expectedCode)
         {
             var mapper = new ResourceCreatedServiceStatusToApiResponseMapper(requestMethod, "/");
