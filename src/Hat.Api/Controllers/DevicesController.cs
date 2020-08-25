@@ -31,33 +31,5 @@ namespace Hat.Api.Controllers
         {
             return Ok();
         }
-        
-        [HttpPost]
-        [Route("{deviceId}/enable")]
-        public IActionResult Enable(int deviceId)
-        {
-            return NoContent();
-        }
-
-        [HttpPost]
-        [Route("{deviceId}/disable")]
-        public IActionResult Disable(int deviceId)
-        {
-            return NoContent();
-        }
-
-        [HttpPost]
-        [Route("{deviceId}/markenabled")]
-        public IActionResult MarkEnabled(int deviceId)
-        {
-            return NoContent();
-        }
-
-        [HttpPost]
-        [Route("{deviceId}/markdisabled")]
-        public IActionResult MarkDisabled(int deviceId)
-        {
-            return NoContent();
-        }
     }
 }
