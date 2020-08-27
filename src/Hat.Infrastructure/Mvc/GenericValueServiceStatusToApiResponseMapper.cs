@@ -16,7 +16,7 @@ namespace Hat.Infrastructure.Mvc
         
         public ObjectResult Map<T>(IServiceResult<T> serviceResult)
         {
-            var response = new ApiResponse<T>(serviceResult.Status.Messages, serviceResult.Value);
+            var response = new ApiResponse<T>(serviceResult.Value);
             if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Get.Method)
             {
                 return new OkObjectResult(response);

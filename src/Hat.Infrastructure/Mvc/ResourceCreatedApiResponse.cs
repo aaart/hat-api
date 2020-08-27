@@ -4,8 +4,7 @@ namespace Hat.Infrastructure.Mvc
 {
     public class ResourceCreatedApiResponse<TId> : ApiResponse
     {
-        public ResourceCreatedApiResponse(TId id, IEnumerable<string> info) 
-            : base(info)
+        public ResourceCreatedApiResponse(TId id) 
         {
         }
         

@@ -18,7 +18,7 @@ namespace Hat.Infrastructure.Mvc
 
         public CreatedResult Map<TId>(IResourceCreatedServiceResult<TId> serviceResult)
         {
-            var response = new ApiResponse<TId>(serviceResult.Status.Messages, serviceResult.Id);
+            var response = new ResourceCreatedApiResponse<TId>(serviceResult.Id);
             if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Post.Method)
             {
                 return new CreatedResult($"{_resourceDirectory}/{serviceResult.Id}", serviceResult.Id);

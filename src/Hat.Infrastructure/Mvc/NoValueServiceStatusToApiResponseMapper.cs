@@ -16,7 +16,6 @@ namespace Hat.Infrastructure.Mvc
 
         public StatusCodeResult Map(IServiceResult serviceResult)
         {
-            var response = new ApiResponse(serviceResult.Status.Messages);
             if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Put.Method)
             {
                 return new NoContentResult();

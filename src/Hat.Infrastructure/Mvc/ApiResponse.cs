@@ -4,17 +4,11 @@ namespace Hat.Infrastructure.Mvc
 {
     public class ApiResponse
     {
-        public ApiResponse(IEnumerable<string> info)
-        {
-            Info = info;
-        }
-        public IEnumerable<string> Info { get; }
     }
     
     public class ApiResponse<T> : ApiResponse
     {
-        public ApiResponse(IEnumerable<string> info, T data)
-            : base(info)
+        public ApiResponse(T data)
         {
             Data = data;
         }
