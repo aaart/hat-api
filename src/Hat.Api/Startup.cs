@@ -5,12 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Hat.Domain.Devices.Services;
+using Hat.Infrastructure.Service;
 using Hat.Services.Devices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PipeSharp;
 
 namespace Hat.Api
 {
@@ -21,6 +23,7 @@ namespace Hat.Api
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddScoped<IGetDevicesService, GetDevicesService>();
+            services.AddScoped<IFlowBuilder<Error>>(provider => new StandardBuilder().WithFilteringError<Error>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

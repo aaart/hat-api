@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Hat.Infrastructure.Mvc;
+using Hat.Infrastructure.Service;
 using Hat.Services.Devices;
 using Hat.Services.Devices.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -24,24 +25,21 @@ namespace Hat.Api.Controllers
         }
         
         /// <summary>
-        /// Gets a list of devices registered in the system.
+        /// Gets a list of on/off devices registered in the system.
         /// </summary>
         /// <returns>The list of devices.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<DeviceDescription>), StatusCodes.Status200OK)]
-        public IActionResult All()
-        {
-            return CreateResponse(_getDevicesService.Execute());
-        }
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<DeviceDescription>>), StatusCodes.Status200OK)]
+        public IActionResult All([FromQuery]int page = 1, [FromQuery]int pageSize = 10) => 
+            CreateResponse(_getDevicesService.Execute(new PagingRequest(page,  pageSize)));
 
         /// <summary>
         /// Gets details of the given device.
         /// </summary>
         /// <param name="deviceId">Device Id</param>
         /// <returns>Device details.</returns>
-        [HttpGet]
-        [Route("{deviceId}")]
-        [ProducesResponseType(typeof(DeviceDetails), StatusCodes.Status200OK)]
+        [HttpGet("{deviceId}")]
+        [ProducesResponseType(typeof(ApiResponse<DeviceDetails>), StatusCodes.Status200OK)]
         public IActionResult Details(int deviceId)
         {
             return Ok();
@@ -52,12 +50,22 @@ namespace Hat.Api.Controllers
         /// </summary>
         /// <param name="deviceId">Device id.</param>
         /// <returns>New state object.</returns>
-        [HttpPost]
-        [Route("{deviceId}/states")]
-        
+        [HttpPost("{deviceId}/states")]
         public IActionResult ProcessNewState([FromBody]int deviceId)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the most recent state for the given device.
+        /// </summary>
+        /// <param name="deviceId">Device id.</param>
+        /// <returns>State result.</returns>
+        [HttpGet("{deviceId}/states/last")]
+        [Produces(typeof(ApiResponse<DeviceDetails>))]
+        public IActionResult GetLastState(int deviceId)
+        {
+            return Ok();
         }
         
         /// <summary>
@@ -65,8 +73,7 @@ namespace Hat.Api.Controllers
         /// </summary>
         /// <param name="deviceId">Device id.</param>
         /// <returns>Identifier referencing the task that process the update of the given state.</returns>
-        [HttpPut]
-        [Route("{deviceId}/states/last")]
+        [HttpPut("{deviceId}/states/last")]
         public IActionResult UpdateLastState([FromBody]int deviceId)
         {
             return Created(HttpContext.Request.Path.Value + "/100", 100);
