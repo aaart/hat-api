@@ -8,18 +8,15 @@ using PipeSharp;
 
 namespace Hat.Domain.Devices.Services
 {
-    public class GetDevicesService : BaseService, IGetDevicesService
+    public class GetDevicesService : BaseService<PagingRequest, IEnumerable<DeviceDescription>>, IGetDevicesService
     {
         public GetDevicesService(IFlowBuilder<Error> flowBuilder) : base(flowBuilder)
         {
         }
 
-        public IServiceResult<IEnumerable<DeviceDescription>> Execute(PagingRequest input) =>
-            PredefinedFlow
-                .For(input)
-                .Finalize(x => Enumerable.Empty<DeviceDescription>())
-                .Project(ServiceResult<IEnumerable<DeviceDescription>>.SuccessResult)
-                .Sink().Result.Value;
+        protected override IPipeline<IEnumerable<DeviceDescription>, Error> CreatePipeline(IFlow<PagingRequest, Error> flow) =>
+            flow
+                .Finalize(x => Enumerable.Empty<DeviceDescription>());
 
     }
 }

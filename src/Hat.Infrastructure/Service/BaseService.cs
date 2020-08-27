@@ -1,14 +1,23 @@
+using System;
 using PipeSharp;
 
 namespace Hat.Infrastructure.Service
 {
-    public class BaseService
+    public abstract class BaseService<TIn, TOut> : IService<TIn, TOut>
     {
-        public BaseService(IFlowBuilder<Error> flowBuilder)
+        private readonly IFlowBuilder<Error> _builder;
+
+        protected BaseService(IFlowBuilder<Error> flowBuilder)
         {
-            PredefinedFlow = flowBuilder;
+            _builder = flowBuilder;
         }
 
-        protected IFlowBuilder<Error> PredefinedFlow { get; }
+        protected abstract IPipeline<TOut, Error> CreatePipeline(IFlow<TIn, Error> flow);
+        
+        public IServiceResult<TOut> Execute(TIn input)
+        {
+            var pipeline = CreatePipeline(_builder.For(input));
+            return ServiceResult<TOut>.SuccessResult(pipeline.Sink().Result.Value);
+        }
     }
 }
