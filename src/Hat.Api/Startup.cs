@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Hat.Domain.Devices.Services;
 using Hat.Services.Devices;
@@ -33,6 +35,10 @@ namespace Hat.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HAT API v1");
                 c.RoutePrefix = string.Empty;
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                // this method can not be found.
+                // c.IncludeXmlComments(xmlPath);
             });
             
             app.UseRouting();
