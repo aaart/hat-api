@@ -13,16 +13,16 @@ namespace Hat.Infrastructure.Mvc
         {
             _requestMethod = requestMethod;
         }
-        
+
         public ObjectResult Map<T>(IServiceResult<T> serviceResult)
         {
             var response = new ApiResponse<T>(serviceResult.Value);
-            if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Get.Method)
+            if (serviceResult.Success && _requestMethod == HttpMethod.Get.Method)
             {
                 return new OkObjectResult(response);
             }
 
-            throw new InvalidOperationException($"service status and request method pair is not mapped to the valid result. Status: {serviceResult.Status.Key} ; Request method: {_requestMethod}");
+            throw new NotImplementedException("This scenario is not supported.");
         }
     }
 }

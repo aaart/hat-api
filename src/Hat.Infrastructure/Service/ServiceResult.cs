@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -6,32 +7,41 @@ namespace Hat.Infrastructure.Service
 {
     public class ServiceResult : IServiceResult
     {
-        public ServiceResult()
-        {
-            Status = Status.Ok;
-        }
+        public static IServiceResult SuccessResult() => new ServiceResult(true); 
+        public static IServiceResult FailedResult() => new ServiceResult(false); 
         
-        public ServiceResult(Status status)
+        private ServiceResult(bool success)
         {
-            Status = status;
+            Success = success;
         }
-        
-        public bool Success => Service.Status.IsOk(Status);
-        public Status Status { get; }
+
+        public bool Success { get; }
     }
 
-    public class ServiceResult<T> : ServiceResult, IServiceResult<T>
+    public class ServiceResult<T> : IServiceResult<T>
     {
-        public ServiceResult(T value)
+        private readonly T _value;
+        public static IServiceResult<T> SuccessResult(T value) => new ServiceResult<T>(true, value); 
+        public static IServiceResult<T> FailedResult() => new ServiceResult<T>(false); 
+        
+        private ServiceResult(bool success, T value = default!)
         {
-            Value = value;
+            Success = success;
+            _value = value;
         }
 
-        public ServiceResult(Status status)
-            : base(status)
+        public bool Success { get; }
+
+        public T Value
         {
+            get
+            {
+                if (Success)
+                {
+                    return _value;
+                }
+                throw new InvalidOperationException("Could not extract result value because service execution failed.");
+            }
         }
-        
-        public T Value { get; } = default!;
     } 
 }

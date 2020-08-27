@@ -8,12 +8,12 @@ namespace Hat.Tests.Infrastructure.Mvc
     public class NoValueServiceStatusToApiResponseMapperTest
     {
         [Theory]
-        [InlineData(Status.PredefinedKey.OkKey, "PUT", StatusCodes.Status204NoContent)]
-        [InlineData(Status.PredefinedKey.OkKey, "DELETE", StatusCodes.Status204NoContent)]
-        public void AllPredefinedReasons_WhenNoValueInServiceResult_ExpectValidHttpResponse(string key, string requestMethod, int expectedCode)
+        [InlineData("PUT", StatusCodes.Status204NoContent)]
+        [InlineData("DELETE", StatusCodes.Status204NoContent)]
+        public void GicenSuccess_WhenNotTypedResult_ExpectValidHttpResponse(string requestMethod, int expectedCode)
         {
             var mapper = new NoValueServiceStatusToApiResponseMapper(requestMethod);
-            var result = mapper.Map(new ServiceResult(Status.New(key)));
+            var result = mapper.Map(ServiceResult.SuccessResult());
             Assert.Equal(expectedCode, result.StatusCode);
         }
     }

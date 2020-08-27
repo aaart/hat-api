@@ -19,12 +19,12 @@ namespace Hat.Infrastructure.Mvc
         public CreatedResult Map<TId>(IResourceCreatedServiceResult<TId> serviceResult)
         {
             var response = new ResourceCreatedApiResponse<TId>(serviceResult.Id);
-            if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Post.Method)
+            if (serviceResult.Success && _requestMethod == HttpMethod.Post.Method)
             {
                 return new CreatedResult($"{_resourceDirectory}/{serviceResult.Id}", serviceResult.Id);
             }
 
-            throw new InvalidOperationException($"service status and request method pair is not mapped to the valid result. Status: {serviceResult.Status.Key} ; Request method: {_requestMethod}");
+            throw new NotImplementedException("This scenario is not supported.");
         }
     }
 }

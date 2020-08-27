@@ -16,17 +16,17 @@ namespace Hat.Infrastructure.Mvc
 
         public StatusCodeResult Map(IServiceResult serviceResult)
         {
-            if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Put.Method)
+            if (serviceResult.Success && _requestMethod == HttpMethod.Put.Method)
             {
                 return new NoContentResult();
             }
 
-            if (Status.IsOk(serviceResult.Status) && _requestMethod == HttpMethod.Delete.Method)
+            if (serviceResult.Success && _requestMethod == HttpMethod.Delete.Method)
             {
                 return new NoContentResult();
             }
 
-            throw new InvalidOperationException($"service status and request method pair is not mapped to the valid result. Status: {serviceResult.Status.Key} ; Request method: {_requestMethod}");
+            throw new NotImplementedException("This scenario is not supported.");
         }
     }
 }

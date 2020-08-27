@@ -4,10 +4,11 @@ namespace Hat.Infrastructure.Mvc
 {
     public class ResourceCreatedApiResponse<TId> : ApiResponse
     {
-        public ResourceCreatedApiResponse(TId id) 
+        public ResourceCreatedApiResponse(TId id)
         {
+            Id = id;
         }
         
-        public TId Id { get; set; }
+        public TId Id { get; }
     }
 }

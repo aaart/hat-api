@@ -18,7 +18,7 @@ namespace Hat.Domain.Devices.Services
             PredefinedFlow
                 .For(input)
                 .Finalize(x => Enumerable.Empty<DeviceDescription>())
-                .Project(x => new ServiceResult<IEnumerable<DeviceDescription>>(x))
+                .Project(ServiceResult<IEnumerable<DeviceDescription>>.SuccessResult)
                 .Sink().Result.Value;
 
     }

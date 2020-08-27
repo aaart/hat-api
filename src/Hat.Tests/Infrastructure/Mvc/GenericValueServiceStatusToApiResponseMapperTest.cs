@@ -8,11 +8,11 @@ namespace Hat.Tests.Infrastructure.Mvc
     public class GenericValueServiceStatusToApiResponseMapperTest
     {
         [Theory]
-        [InlineData(Status.PredefinedKey.OkKey, "GET", StatusCodes.Status200OK)]
-        public void AllPredefinedReasons_WhenValueInServiceResult_ExpectValidHttpResponse(string key, string requestMethod, int expectedCode)
+        [InlineData("GET", StatusCodes.Status200OK)]
+        public void GivenSuccess_WhenTypedResult_ExpectValidHttpResponse(string requestMethod, int expectedCode)
         {
             var mapper = new GenericValueServiceStatusToApiResponseMapper(requestMethod);
-            var result = mapper.Map(new ServiceResult<object>(Status.New(key)));
+            var result = mapper.Map(ServiceResult<object>.SuccessResult(new object()));
             Assert.Equal(expectedCode, result.StatusCode);
         }
     }
