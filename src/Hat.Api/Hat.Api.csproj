@@ -6,11 +6,11 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\Hat.Api.xml</DocumentationFile>
+      <DocumentationFile></DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Hat.Api.xml</DocumentationFile>
+      <DocumentationFile></DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
