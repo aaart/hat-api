@@ -23,7 +23,7 @@ namespace Hat.Api
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddScoped<IGetDevicesService, GetDevicesService>();
-            services.AddScoped<IFlowBuilder<Error>>(provider => new StandardBuilder().WithFilteringError<Error>());
+            services.AddScoped<IFlowBuilder<Error>>(provider => new StandardBuilder().UseErrorType<Error>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
