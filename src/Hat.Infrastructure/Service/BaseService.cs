@@ -1,4 +1,6 @@
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using PipeSharp;
 
 namespace Hat.Infrastructure.Service
@@ -12,6 +14,8 @@ namespace Hat.Infrastructure.Service
             _builder = flowBuilder;
         }
 
+        protected ILogger Logger { get; set; } = NullLogger.Instance;
+        
         protected abstract IPipeline<TOut, Error> CreatePipeline(IFlow<TIn, Error> flow);
         
         public IServiceResult<TOut> Execute(TIn input)

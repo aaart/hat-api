@@ -15,8 +15,6 @@ namespace Hat.Domain.Devices.Services
         public GetDevicesService(IFlowBuilder<Error> flowBuilder) : base(flowBuilder)
         {
         }
-        
-        protected ILogger Logger { get; set; } = NullLogger.Instance;
 
         protected override IPipeline<IEnumerable<DeviceDescription>, Error> CreatePipeline(IFlow<PagingRequest, Error> flow) =>
             flow
