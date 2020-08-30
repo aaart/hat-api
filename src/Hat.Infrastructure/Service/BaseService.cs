@@ -20,7 +20,7 @@ namespace Hat.Infrastructure.Service
             var (result, errors) = pipeline.Sink();
             if (result.Failed)
             {
-                ServiceResult<TOut>.FailedResult(errors);
+                return ServiceResult<TOut>.FailedResult(errors);
             }
             return ServiceResult<TOut>.SuccessResult(result.Value);
         }
