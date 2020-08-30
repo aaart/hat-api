@@ -4,6 +4,8 @@ using Hat.Infrastructure.Mvc;
 using Hat.Infrastructure.Service;
 using Hat.Services.Devices;
 using Hat.Services.Devices.Dtos;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using PipeSharp;
 
 namespace Hat.Domain.Devices.Services
@@ -13,6 +15,8 @@ namespace Hat.Domain.Devices.Services
         public GetDevicesService(IFlowBuilder<Error> flowBuilder) : base(flowBuilder)
         {
         }
+        
+        protected ILogger Logger { get; set; } = NullLogger.Instance;
 
         protected override IPipeline<IEnumerable<DeviceDescription>, Error> CreatePipeline(IFlow<PagingRequest, Error> flow) =>
             flow
