@@ -23,7 +23,11 @@ namespace Hat.Api
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddScoped<IGetDevicesService, GetDevicesService>();
-            services.AddScoped<IFlowBuilder<Error>>(provider => new StandardBuilder().UseErrorType<Error>());
+            services.AddScoped<IFlowBuilder<Error>>(
+                provider => 
+                    new StandardBuilder()
+                    .UseErrorType<Error>()
+                    .MapExceptionToErrorOnDeconstruct(ex => new Error(ex.Message)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,12 +47,9 @@ namespace Hat.Api
                 // this method can not be found.
                 // c.IncludeXmlComments(xmlPath);
             });
-            
+
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute("default", "{controller}/{action}/{id?}");
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllerRoute("default", "{controller}/{action}/{id?}"); });
         }
     }
 }

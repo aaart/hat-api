@@ -17,7 +17,12 @@ namespace Hat.Infrastructure.Service
         public IServiceResult<TOut> Execute(TIn input)
         {
             var pipeline = CreatePipeline(_builder.For(input));
-            return ServiceResult<TOut>.SuccessResult(pipeline.Sink().Result.Value);
+            var (result, errors) = pipeline.Sink();
+            if (result.Failed)
+            {
+                ServiceResult<TOut>.FailedResult(errors);
+            }
+            return ServiceResult<TOut>.SuccessResult(result.Value);
         }
     }
 }
