@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using PipeSharp;
 
 namespace Hat.Api
@@ -27,6 +28,7 @@ namespace Hat.Api
                 provider => 
                     new StandardBuilder()
                     .UseErrorType<Error>()
+                    .HandleException((ex, logger) => logger.LogError(ex, ex.Message))
                     .MapExceptionToErrorOnDeconstruct(ex => new Error(ex.Message)));
         }
 
