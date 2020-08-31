@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Hat.Domain.Devices.Services;
 using Hat.Infrastructure.Service;
-using Hat.Services.Devices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PipeSharp;
+using Serilog;
 
 namespace Hat.Api
 {
@@ -23,13 +18,16 @@ namespace Hat.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddScoped<IGetDevicesService, GetDevicesService>();
+            
             services.AddScoped<IFlowBuilder<Error>>(
                 provider => 
                     new StandardBuilder()
-                    .UseErrorType<Error>()
-                    .HandleException((ex, logger) => logger.LogError(ex, ex.Message))
-                    .MapExceptionToErrorOnDeconstruct(ex => new Error(ex.Message)));
+                        .UseErrorType<Error>()
+                        .HandleException((ex, logger) => logger.LogError(ex, ex.Message))
+                        .MapExceptionToErrorOnDeconstruct(ex => new Error(ex.Message)));
+            
+            services.RegisterDomainServices();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,6 +37,7 @@ namespace Hat.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSerilogRequestLogging();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

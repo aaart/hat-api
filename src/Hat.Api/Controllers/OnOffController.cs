@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Hat.Infrastructure.Mvc;
-using Hat.Infrastructure.Service;
 using Hat.Services.Devices;
 using Hat.Services.Devices.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -30,8 +27,8 @@ namespace Hat.Api.Controllers
         /// <returns>The list of devices.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<DeviceDescription>>), StatusCodes.Status200OK)]
-        public IActionResult All([FromQuery]int page = 1, [FromQuery]int pageSize = 10) => 
-            CreateResponse(_getDevicesService.Execute(new PagingRequest(page,  pageSize)));
+        public IActionResult All([FromQuery]PagingRequest pagingRequest) => 
+            CreateResponse(_getDevicesService.Execute(pagingRequest));
 
         /// <summary>
         /// Gets details of the given device.

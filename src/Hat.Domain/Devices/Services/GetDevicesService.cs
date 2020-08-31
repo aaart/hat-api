@@ -5,20 +5,24 @@ using Hat.Infrastructure.Service;
 using Hat.Services.Devices;
 using Hat.Services.Devices.Dtos;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using PipeSharp;
 
 namespace Hat.Domain.Devices.Services
 {
     public class GetDevicesService : BaseService<PagingRequest, IEnumerable<DeviceDescription>>, IGetDevicesService
     {
-        public GetDevicesService(IFlowBuilder<Error> flowBuilder) : base(flowBuilder)
+        public GetDevicesService(IFlowBuilder<Error> flowBuilder, ILoggerFactory loggerFactory) 
+            : base(flowBuilder, loggerFactory)
         {
         }
 
-        protected override IPipeline<IEnumerable<DeviceDescription>, Error> CreatePipeline(IFlow<PagingRequest, Error> flow) =>
+        protected override IPipeline<IEnumerable<DeviceDescription>, Error> CreatePipeline(IFlow<PagingRequest, Error> flow, ILogger logger) =>
             flow
-                .Finalize(x => Enumerable.Empty<DeviceDescription>());
+                .Finalize(x =>
+                {
+                    logger.LogInformation("I am printing information.");
+                    return Enumerable.Empty<DeviceDescription>();
+                });
 
     }
 }
