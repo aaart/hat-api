@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Hat.Infrastructure.Mvc;
 using Hat.Infrastructure.Service;
+using Hat.Services.Common.Dto;
 using Hat.Services.Devices;
-using Hat.Services.Devices.Dtos;
+using Hat.Services.Devices.Dto;
+using Hat.Services.Devices.Services;
 using Microsoft.Extensions.Logging;
 using PipeSharp;
 

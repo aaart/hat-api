@@ -24,7 +24,7 @@ namespace Hat.Api
                     new StandardBuilder()
                         .UseErrorType<Error>()
                         .HandleException((ex, logger) => logger.LogError(ex, ex.Message))
-                        .MapExceptionToErrorOnDeconstruct(ex => new Error(ex.Message)));
+                        .MapExceptionToErrorOnDeconstruct(ex => new Error(ex.GetType().Name, ex.Message)));
             
             services.RegisterDomainServices();
             

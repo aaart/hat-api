@@ -1,7 +1,6 @@
 using System.ComponentModel;
-using Microsoft.AspNetCore.HttpOverrides;
 
-namespace Hat.Infrastructure.Mvc
+namespace Hat.Services.Common.Dto
 {
     public class PagingRequest
     {

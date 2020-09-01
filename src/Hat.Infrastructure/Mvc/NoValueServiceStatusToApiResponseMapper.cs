@@ -26,7 +26,7 @@ namespace Hat.Infrastructure.Mvc
                 return new NoContentResult();
             }
 
-            throw new NotImplementedException("This scenario is not supported.");
+            throw new InvalidOperationException("This scenario is not supported.");
         }
     }
 }

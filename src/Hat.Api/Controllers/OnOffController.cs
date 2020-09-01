@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Hat.Infrastructure.Mvc;
+using Hat.Services.Common.Dto;
 using Hat.Services.Devices;
-using Hat.Services.Devices.Dtos;
+using Hat.Services.Devices.Dto;
+using Hat.Services.Devices.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +17,13 @@ namespace Hat.Api.Controllers
     public class OnOffController : ApiController
     {
         private readonly IGetDevicesService _getDevicesService;
+        private readonly IGetDeviceDetailsService _getDeviceDetailsService;
 
-        public OnOffController(IGetDevicesService getDevicesService)
+        public OnOffController(IGetDevicesService getDevicesService,
+            IGetDeviceDetailsService getDeviceDetailsService)
         {
             _getDevicesService = getDevicesService;
+            _getDeviceDetailsService = getDeviceDetailsService;
         }
         
         /// <summary>
@@ -33,14 +38,12 @@ namespace Hat.Api.Controllers
         /// <summary>
         /// Gets details of the given device.
         /// </summary>
-        /// <param name="deviceId">Device Id</param>
+        /// <param name="request">Object request</param>
         /// <returns>Device details.</returns>
-        [HttpGet("{deviceId}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(ApiResponse<DeviceDetails>), StatusCodes.Status200OK)]
-        public IActionResult Details(int deviceId)
-        {
-            return Ok();
-        }
+        public IActionResult Details([FromRoute]ObjectRequest request) =>
+            CreateResponse(_getDeviceDetailsService.Execute(request));
         
         /// <summary>
         /// Registers new state of a given device and starts all actions required to physically change the original state.

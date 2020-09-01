@@ -1,4 +1,4 @@
-namespace Hat.Services.Devices.Dtos
+namespace Hat.Services.Devices.Dto
 {
     public class DeviceDescription
     {

@@ -24,7 +24,7 @@ namespace Hat.Infrastructure.Mvc
                 return new CreatedResult($"{_resourceDirectory}/{serviceResult.Id}", serviceResult.Id);
             }
 
-            throw new NotImplementedException("This scenario is not supported.");
+            throw new InvalidOperationException("This scenario is not supported.");
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Hat.Infrastructure.Service
     public interface IServiceResult
     {
         public bool Success { get; }
+        Error[] Errors { get; }
     }
 
     public interface IServiceResult<out T> : IServiceResult
