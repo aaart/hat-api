@@ -10,10 +10,12 @@ namespace Hat.Infrastructure.Mvc
     public class NoValueServiceStatusToApiResponseMapper
     {
         private readonly string _requestMethod;
+        private readonly ErrorToResponseMapper _errorMapper;
 
         public NoValueServiceStatusToApiResponseMapper(string requestMethod)
         {
             _requestMethod = requestMethod;
+            _errorMapper = new ErrorToResponseMapper();
         }
 
         public IStatusCodeActionResult Map(IServiceResult serviceResult)
@@ -27,10 +29,8 @@ namespace Hat.Infrastructure.Mvc
             {
                 return new NoContentResult();
             }
-            
-            var majorError = serviceResult.Errors[0];
-            var errorResponse = new ApiErrorResponse(serviceResult.Errors);
-            return new ObjectResult(errorResponse) { StatusCode = StatusCodes.Status500InternalServerError };
+
+            return _errorMapper.Map(serviceResult.Errors);
         }
     }
 }

@@ -10,10 +10,12 @@ namespace Hat.Infrastructure.Mvc
     public class GenericValueServiceStatusToApiResponseMapper
     {
         private readonly string _requestMethod;
+        private readonly ErrorToResponseMapper _errorMapper;
 
         public GenericValueServiceStatusToApiResponseMapper(string requestMethod)
         {
             _requestMethod = requestMethod;
+            _errorMapper = new ErrorToResponseMapper();
         }
 
         public ObjectResult Map<T>(IServiceResult<T> serviceResult)
@@ -29,18 +31,7 @@ namespace Hat.Infrastructure.Mvc
                 return new OkObjectResult(response);
             }
 
-            var majorError = serviceResult.Errors[0];
-            var errorResponse = new ApiErrorResponse(serviceResult.Errors);
-            if (Error.IsNotFound(majorError))
-            {
-                return new NotFoundObjectResult(errorResponse);
-            }
-            if (Error.IsUnauthorized(majorError))
-            {
-                return new UnauthorizedObjectResult(errorResponse);
-            }
-            
-            return new ObjectResult(errorResponse) { StatusCode = StatusCodes.Status500InternalServerError };
+            return _errorMapper.Map(serviceResult.Errors);
         }
     }
 }

@@ -10,11 +10,13 @@ namespace Hat.Infrastructure.Mvc
     {
         private readonly string _requestMethod;
         private readonly string _resourceDirectory;
+        private readonly ErrorToResponseMapper _errorMapper;
 
         public ResourceCreatedServiceStatusToApiResponseMapper(string requestMethod, string resourceDirectory)
         {
             _requestMethod = requestMethod;
             _resourceDirectory = resourceDirectory;
+            _errorMapper = new ErrorToResponseMapper();
         }
 
         public ObjectResult Map<TId>(IResourceCreatedServiceResult<TId> serviceResult)
@@ -30,9 +32,7 @@ namespace Hat.Infrastructure.Mvc
                 return new CreatedResult($"{_resourceDirectory}/{serviceResult.Id}", response);
             }
 
-            var majorError = serviceResult.Errors[0];
-            var errorResponse = new ApiErrorResponse(serviceResult.Errors);
-            return new ObjectResult(errorResponse) { StatusCode = StatusCodes.Status500InternalServerError };
+            return _errorMapper.Map(serviceResult.Errors);
         }
     }
 }
