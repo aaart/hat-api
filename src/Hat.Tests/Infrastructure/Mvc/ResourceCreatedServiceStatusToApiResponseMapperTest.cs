@@ -1,6 +1,7 @@
 using Hat.Infrastructure.Mvc;
 using Hat.Infrastructure.Service;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace Hat.Tests.Infrastructure.Mvc
@@ -17,12 +18,12 @@ namespace Hat.Tests.Infrastructure.Mvc
         }
 
         [Fact]
-        public void GivenResourceDirectory_WhenCreatingNewResource_ExpectLocationHeaderDefined()
+        public void GivenResourceDirectory_WhenNewResourceCreated_ExpectLocationHeaderDefined()
         {
             const int newId = 1;
             const string resourceDirectory = "/resx";
             var mapper = new ResourceCreatedServiceStatusToApiResponseMapper("POST", resourceDirectory);
-            var result = mapper.Map(ResourceCreatedServiceResult<int>.SuccessResult(newId));
+            var result = (CreatedResult)mapper.Map(ResourceCreatedServiceResult<int>.SuccessResult(newId));
             Assert.Equal($"{resourceDirectory}/{newId}", result.Location);
         } 
     }

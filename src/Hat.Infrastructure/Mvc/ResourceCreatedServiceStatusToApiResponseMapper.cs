@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using Hat.Infrastructure.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hat.Infrastructure.Mvc
@@ -16,15 +17,22 @@ namespace Hat.Infrastructure.Mvc
             _resourceDirectory = resourceDirectory;
         }
 
-        public CreatedResult Map<TId>(IResourceCreatedServiceResult<TId> serviceResult)
+        public ObjectResult Map<TId>(IResourceCreatedServiceResult<TId> serviceResult)
         {
-            var response = new ResourceCreatedApiResponse<TId>(serviceResult.Id);
-            if (serviceResult.Success && _requestMethod == HttpMethod.Post.Method)
+            if (_requestMethod != HttpMethod.Post.Method)
             {
-                return new CreatedResult($"{_resourceDirectory}/{serviceResult.Id}", serviceResult.Id);
+                throw new InvalidOperationException($"{_requestMethod} http method is not supported.");
+            }
+            
+            var response = new ResourceCreatedApiResponse<TId>(serviceResult.Id);
+            if (serviceResult.Success)
+            {
+                return new CreatedResult($"{_resourceDirectory}/{serviceResult.Id}", response);
             }
 
-            throw new InvalidOperationException("This scenario is not supported.");
+            var majorError = serviceResult.Errors[0];
+            var errorResponse = new ApiErrorResponse(serviceResult.Errors);
+            return new ObjectResult(errorResponse) { StatusCode = StatusCodes.Status500InternalServerError };
         }
     }
 }
