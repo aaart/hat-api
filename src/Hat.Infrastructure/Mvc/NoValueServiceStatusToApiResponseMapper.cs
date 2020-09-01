@@ -1,7 +1,9 @@
 using System;
 using System.Net.Http;
 using Hat.Infrastructure.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Hat.Infrastructure.Mvc
 {
@@ -14,19 +16,21 @@ namespace Hat.Infrastructure.Mvc
             _requestMethod = requestMethod;
         }
 
-        public StatusCodeResult Map(IServiceResult serviceResult)
+        public IStatusCodeActionResult Map(IServiceResult serviceResult)
         {
-            if (serviceResult.Success && _requestMethod == HttpMethod.Put.Method)
+            if (_requestMethod == HttpMethod.Put.Method && _requestMethod == HttpMethod.Delete.Method)
+            {
+                throw new InvalidOperationException($"{_requestMethod} http method is not supported.");
+            }
+            
+            if (serviceResult.Success)
             {
                 return new NoContentResult();
             }
-
-            if (serviceResult.Success && _requestMethod == HttpMethod.Delete.Method)
-            {
-                return new NoContentResult();
-            }
-
-            throw new InvalidOperationException("This scenario is not supported.");
+            
+            var majorError = serviceResult.Errors[0];
+            var errorResponse = new ApiErrorResponse(serviceResult.Errors);
+            return new ObjectResult(errorResponse) { StatusCode = StatusCodes.Status500InternalServerError };
         }
     }
 }
