@@ -6,11 +6,13 @@ namespace Hat.Infrastructure.Service
     public class Error
     {
         
-        private const string NotFound = "FileNotFound";
-        private const string Unauthorized = "UnauthorizedAccess";
         
-        public static bool IsNotFound(Error error) => error.Type == NotFound;
-        public static bool IsUnauthorized(Error error) => error.Type == Unauthorized;
+        
+        public static Error NotFound(string message) => new Error(PredefinedErrors.NotFound, message);
+        public static Error Unauthorized(string message) => new Error(PredefinedErrors.UnAuthorized, message);
+        
+        public static bool IsNotFound(Error error) => error.Type == PredefinedErrors.NotFound;
+        public static bool IsUnauthorized(Error error) => error.Type == PredefinedErrors.UnAuthorized;
 
         public static Error FromException(Exception exception) => new Error(exception.GetType().Name.Replace("Exception", String.Empty), exception.Message);
         
@@ -22,5 +24,11 @@ namespace Hat.Infrastructure.Service
 
         public string Type { get; }
         public string Message { get; }
+        
+        private static class PredefinedErrors
+        {
+            public const string NotFound = "FileNotFound";
+            public const string UnAuthorized = "UnauthorizedAccess";
+        }
     }
 }
