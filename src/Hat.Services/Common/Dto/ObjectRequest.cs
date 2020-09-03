@@ -1,7 +1,8 @@
+using Hat.Infrastructure.Service;
+
 namespace Hat.Services.Common.Dto
 {
-    public class ObjectRequest
+    public class ObjectRequest : Dto<int>
     {
-        public int Id { get; set; }
     }
 }

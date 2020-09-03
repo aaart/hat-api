@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Hat.Services.Common.Dto
 {
-    public class PagingRequest
+    public class PagingRequest : Infrastructure.Service.Dto
     {
         [DefaultValue(1)]
         public int Page { get; set; } = 1;

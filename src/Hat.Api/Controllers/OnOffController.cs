@@ -38,32 +38,32 @@ namespace Hat.Api.Controllers
         /// <summary>
         /// Gets details of the given device.
         /// </summary>
-        /// <param name="request">Object request</param>
+        /// <param name="request">Object request containing device Id.</param>
         /// <returns>Device details.</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ApiResponse<DeviceDetails>), StatusCodes.Status200OK)]
         public IActionResult Details([FromRoute]ObjectRequest request) =>
             CreateResponse(_getDeviceDetailsService.Execute(request));
-        
+
         /// <summary>
         /// Registers new state of a given device and starts all actions required to physically change the original state.
         /// </summary>
-        /// <param name="deviceId">Device id.</param>
+        /// <param name="request">Object request containing device Id.</param>
         /// <returns>New state object.</returns>
-        [HttpPost("{deviceId}/states")]
-        public IActionResult ProcessNewState([FromBody]int deviceId)
+        [HttpPost("{id}/states")]
+        public IActionResult ProcessNewState([FromRoute]ObjectRequest request)
         {
-            throw new NotImplementedException();
+            return Created("", "");
         }
 
         /// <summary>
         /// Gets the most recent state for the given device.
         /// </summary>
-        /// <param name="deviceId">Device id.</param>
+        /// <param name="request">Object request containing device Id.</param>
         /// <returns>State result.</returns>
-        [HttpGet("{deviceId}/states/last")]
+        [HttpGet("{id}/states/last")]
         [Produces(typeof(ApiResponse<DeviceDetails>))]
-        public IActionResult GetLastState(int deviceId)
+        public IActionResult GetLastState([FromBody]OnOffDeviceState request)
         {
             return Ok();
         }
@@ -71,12 +71,12 @@ namespace Hat.Api.Controllers
         /// <summary>
         /// Triggers async update of the the most recent state without triggering any actions that physically change the state of a given device. 
         /// </summary>
-        /// <param name="deviceId">Device id.</param>
+        /// <param name="request">Object request containing device Id and the new state.</param>
         /// <returns>Identifier referencing the task that process the update of the given state.</returns>
-        [HttpPut("{deviceId}/states/last")]
-        public IActionResult UpdateLastState([FromBody]int deviceId)
+        [HttpPut("{id}/states/last")]
+        public IActionResult UpdateLastState([FromRoute]OnOffDeviceState request)
         {
-            return Created(HttpContext.Request.Path.Value + "/100", 100);
+            return Accepted();
         }
     }
 }
