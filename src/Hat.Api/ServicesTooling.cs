@@ -9,7 +9,7 @@ namespace Hat.Api
 {
     public static class ServicesTooling
     {
-        public static void RegisterDomainServices(this IServiceCollection services)
+        public static void AddDomainServices(this IServiceCollection services)
         {
             var assembly = typeof(GetDevicesService).Assembly;
             var domainServices = 

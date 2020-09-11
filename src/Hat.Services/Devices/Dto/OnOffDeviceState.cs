@@ -5,7 +5,8 @@ namespace Hat.Services.Devices.Dto
 {
     public class OnOffDeviceState : Dto<int>
     {
-        [FromBody]
         public bool Enabled { get; set; }
+        
+        public string Title { get; set; }
     }
 }

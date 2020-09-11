@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Hat.Infrastructure.Mvc;
+using Hat.Infrastructure.Mvc.Swagger;
 using Hat.Services.Common.Dto;
 using Hat.Services.Devices;
 using Hat.Services.Devices.Dto;
 using Hat.Services.Devices.Services;
+using HybridModelBinding;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,7 +65,7 @@ namespace Hat.Api.Controllers
         /// <returns>State result.</returns>
         [HttpGet("{id}/states/last")]
         [Produces(typeof(ApiResponse<DeviceDetails>))]
-        public IActionResult GetLastState([FromBody]OnOffDeviceState request)
+        public IActionResult GetLastState(OnOffDeviceState request)
         {
             return Ok();
         }
@@ -74,9 +76,10 @@ namespace Hat.Api.Controllers
         /// <param name="request">Object request containing device Id and the new state.</param>
         /// <returns>Identifier referencing the task that process the update of the given state.</returns>
         [HttpPut("{id}/states/last")]
-        public IActionResult UpdateLastState([FromRoute]OnOffDeviceState request)
+        //[MixedRouteAndBody]
+        public IActionResult UpdateLastState([FromHybrid]OnOffDeviceState request)
         {
-            return Accepted();
+            return Ok(request);
         }
     }
 }
